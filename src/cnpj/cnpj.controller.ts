@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { CnpjService } from './cnpj.service';
 import { CnpjDto } from './dto';
 
@@ -6,8 +6,8 @@ import { CnpjDto } from './dto';
 export class CnpjController {
     constructor(private cnpjApi : CnpjService){}
     
-    @Post('consulta')
+    @Get('consulta')
     consulta(@Body() dto : CnpjDto){
-        this.cnpjApi.getCnpjData(dto)
+         return this.cnpjApi.getCnpjData(dto)
     }
 }
