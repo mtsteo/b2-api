@@ -9,7 +9,6 @@ export class CnpjService {
     constructor(private api: HttpService, private config: ConfigService) { }
 
     async getCnpjData(dto: CnpjDto): Promise<{}> {
-
         try {
             const url = await this.config.get('URL_CNPJ_API')
             const { data } = await firstValueFrom(this.api.get(url + dto.cnpj))
@@ -18,7 +17,7 @@ export class CnpjService {
             }
 
         } catch (error) {
-            throw new ForbiddenException('API Indisonível')
+            throw new ForbiddenException('API Indisponível')
         }
 
 

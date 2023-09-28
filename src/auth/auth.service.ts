@@ -8,27 +8,19 @@ import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
-  constructor(private prisma: PrismaService, private jwt: JwtService, private config : ConfigService) { }
+  constructor(private prisma: PrismaService, private jwt: JwtService, private config: ConfigService) { }
 
   async signIn(dto: AuthDto) {
-    // encontrar o usuário
     const user = await this.prisma.user.findFirst({
       where: {
         email: dto.email
       }
     });
 
-    //Se o usuário nao existe tratar excessão!
     if (!user) throw new ForbiddenException('Usuário não encontrado!');
-
-    //Comparar as senhas
     const passwordMatch = await argon.verify(user.password, dto.password);
-
-    //Se a senha estiver icorreta, tratar excessão!
     if (!passwordMatch) throw new ForbiddenException('Senha incorreta!');
-
-    const token = this.signToken(user.id.toString(), user.email)
-
+    const token = this.signToken(user.id, user.email)
     return token;
   }
 
@@ -52,7 +44,7 @@ export class AuthService {
     }
   }
 
-  async signToken(userId: string, email: string): Promise<{}> {
+  async signToken(userId: number, email: string): Promise<{}> {
     const payload = {
       sub: userId,
       email,
