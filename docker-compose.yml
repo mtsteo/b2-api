@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  api:
+    build:
+      context: .
+      dockerfile: dockerfile.dev
+    container_name: nest-api
+    environment:
+      - PORT=3000
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+    volumes:
+      - ./src:/api/src
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: nest
+    container_name: postgres-db
+    ports:
+      - '5432:5432'
+    
+
+      
