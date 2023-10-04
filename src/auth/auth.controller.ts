@@ -11,8 +11,5 @@ export class AuthController {
     return this.authServices.signIn(dto)
   }
 
-  @Post('cadastro')
-  signUp(@Body() dto :AuthDto) {
-   return this.authServices.signUp(dto)
-  }
+
 }

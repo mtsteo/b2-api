@@ -5,7 +5,7 @@ import { CnpjModule } from './cnpj/cnpj.module';
 import { ConfigModule } from '@nestjs/config';
 import { NegociacaoModule } from './negociacao/negociacao.module';
 import { HttpModule } from '@nestjs/axios';
-import { PfisicaModule } from './pfisica/pfisica.module';
+import { PJuridicaModule } from './p-juridica/p-juridica.module';
 
 @Module({
   imports: [
@@ -17,7 +17,7 @@ import { PfisicaModule } from './pfisica/pfisica.module';
     PrismaModule,
     CnpjModule,
     NegociacaoModule,
-    PfisicaModule,
+    PJuridicaModule,
   ],
   controllers: [],
   providers: [],
