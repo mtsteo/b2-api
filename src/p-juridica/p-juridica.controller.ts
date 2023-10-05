@@ -3,11 +3,11 @@ import { PJuridicaService } from './p-juridica.service';
 import { CreatePJuridicaDto } from './dto/create-p-juridica.dto';
 import { UpdatePJuridicaDto } from './dto/update-p-juridica.dto';
 
-@Controller('p-juridica')
+@Controller('pjuridica')
 export class PJuridicaController {
   constructor(private readonly pJuridicaService: PJuridicaService) {}
 
-  @Post()
+  @Post('/cadastro')
   create(@Body() createPJuridicaDto: CreatePJuridicaDto) {
     return this.pJuridicaService.create(createPJuridicaDto);
   }
@@ -32,3 +32,4 @@ export class PJuridicaController {
     return this.pJuridicaService.remove(+id);
   }
 }
+
