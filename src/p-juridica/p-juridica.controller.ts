@@ -17,7 +17,7 @@ export class PJuridicaController {
     return this.pJuridicaService.findAll();
   }
 
-  @Get(':id')
+  @Get('busca/:id')
   findOne(@Param('id') id: string) {
     return this.pJuridicaService.findOne(+id);
   }

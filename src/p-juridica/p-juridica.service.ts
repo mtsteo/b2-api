@@ -8,6 +8,7 @@ import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 @Injectable()
 export class PJuridicaService {
   constructor(private prisma: PrismaService) {}
+  
   async create(createPJuridicaDto: CreatePJuridicaDto) {
     const phash = await argo.hash(createPJuridicaDto.password);
     try {
@@ -21,7 +22,8 @@ export class PJuridicaService {
       return 'User created';
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
-        if (error.code === 'P2002') throw new ForbiddenException('Email já cadastrado!');
+        if (error.code === 'P2002')
+          throw new ForbiddenException({ message: 'Usuário já cadastrado' });
       }
       return error;
     }
@@ -30,20 +32,21 @@ export class PJuridicaService {
   findAll() {
     return `This action returns all pJuridica`;
   }
+
   async findOne(id: number) {
-    try {
-      const userData = await this.prisma.user.findFirst({
-        where: {
-          id: id,
-        },
-        include: {
-          produto: true,
-        },
-      });
-      delete userData.password
+    const userData = await this.prisma.user.findFirst({
+      where: {
+        id: id,
+      },
+      include: {
+        produto: true,
+      },
+    });
+    if (userData) {
+      delete userData.password;
       return userData;
-    } catch (error) {}
-    return `This action returns a #${id} pJuridica`;
+    }
+    throw new ForbiddenException({ error: 'usuário não entrado!' });
   }
 
   update(id: number, updatePJuridicaDto: UpdatePJuridicaDto) {
