@@ -3,22 +3,159 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
-model user {
-  id       Int       @id @default(autoincrement())
-  email    String    @unique @db.VarChar(50)
-  password String    @db.VarChar(100)
-  cpnj     String    @db.VarChar(14)
-  produto  produto[]
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model cadastra {
+  fk_usuario_master_id String?         @db.VarChar(255)
+  fk_funcionario_id    String?         @db.VarChar(255)
+  data_cadastro        DateTime        @default(now()) @db.Timestamp(0)
+  usuario_master       usuario_master? @relation(fields: [fk_usuario_master_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "FK_cadastra_1")
+  funcionario          funcionario?    @relation(fields: [fk_funcionario_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "FK_cadastra_2")
+
+  @@index([fk_usuario_master_id], map: "FK_cadastra_1")
+  @@index([fk_funcionario_id], map: "FK_cadastra_2")
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model cadastra_prod {
+  fk_empresa_id String?  @db.VarChar(255)
+  fk_produto_id String?  @db.VarChar(255)
+  empresa       empresa? @relation(fields: [fk_empresa_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "FK_cadastra_prod_1")
+  produto       produto? @relation(fields: [fk_produto_id], references: [id], onUpdate: Restrict, map: "FK_cadastra_prod_2")
+
+  @@index([fk_empresa_id], map: "FK_cadastra_prod_1")
+  @@index([fk_produto_id], map: "FK_cadastra_prod_2")
+  @@ignore
+}
+
+model categoria {
+  id        Int       @id @default(autoincrement())
+  descricao String?   @db.VarChar(255)
+  produto   produto[]
+}
+
+model empresa {
+  id                   String          @id @db.VarChar(255)
+  cnpj                 String?         @db.VarChar(255)
+  nome_fantasia        String?         @db.VarChar(255)
+  razao_socia          String?         @db.VarChar(255)
+  fk_usuario_master_id String?         @db.VarChar(255)
+  cadastra_prod        cadastra_prod[] @ignore
+  usuario_master       usuario_master? @relation(fields: [fk_usuario_master_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "FK_empresa_2")
+  funcionario          funcionario[]
+  reside               reside[]        @ignore
+
+  @@index([fk_usuario_master_id], map: "FK_empresa_2")
+}
+
+model endereco {
+  id                  Int            @id @default(autoincrement())
+  cep                 String?        @db.VarChar(255)
+  uf                  String?        @db.Char(2)
+  cidade              String?        @db.VarChar(255)
+  bairro              String?        @db.VarChar(255)
+  rua                 String?        @db.VarChar(255)
+  num                 String?        @db.VarChar(255)
+  refer               String?        @db.VarChar(255)
+  fk_tipo_endereco_id Int?
+  tipo_endereco       tipo_endereco? @relation(fields: [fk_tipo_endereco_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "FK_endereco_2")
+  reside              reside[]       @ignore
+
+  @@index([fk_tipo_endereco_id], map: "FK_endereco_2")
+}
+
+model familia {
+  id        Int       @id @default(autoincrement())
+  descricao String?   @db.VarChar(255)
+  produto   produto[]
+}
+
+model funcionario {
+  id            String     @id @db.VarChar(255)
+  nome          String?    @db.VarChar(255)
+  sobrenome     String?    @db.VarChar(255)
+  email         String?    @db.VarChar(255)
+  senha         String?    @db.VarChar(255)
+  fk_empresa_id String?    @db.VarChar(255)
+  cadastra      cadastra[] @ignore
+  empresa       empresa?   @relation(fields: [fk_empresa_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "FK_funcionario_2")
+  possui        possui[]   @ignore
+
+  @@index([fk_empresa_id], map: "FK_funcionario_2")
+}
+
+model grupo {
+  id        Int       @id @default(autoincrement())
+  descricao String?   @db.VarChar(255)
+  produto   produto[]
+}
+
+model permissao {
+  id     Int      @id
+  tipo   String?  @db.VarChar(255)
+  possui possui[] @ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model possui {
+  fk_funcionario_id String?      @db.VarChar(255)
+  fk_permissao_id   Int?
+  funcionario       funcionario? @relation(fields: [fk_funcionario_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "FK_possui_1")
+  permissao         permissao?   @relation(fields: [fk_permissao_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "FK_possui_2")
+
+  @@index([fk_funcionario_id], map: "FK_possui_1")
+  @@index([fk_permissao_id], map: "FK_possui_2")
+  @@ignore
 }
 
 model produto {
-  id         Int    @id @default(autoincrement())
-  nome       String @db.VarChar(100)
-  cod_barras String @db.VarChar(30)
-  userId     Int
-  user       user   @relation(fields: [userId], references: [id])
+  id              String          @id @db.VarChar(255)
+  nome            String?         @db.VarChar(255)
+  descricao       String?         @db.Text
+  ncm             String?         @db.VarChar(255)
+  fk_categoria_id Int?
+  fk_grupo_id     Int?
+  fk_familia_id   Int?
+  cadastra_prod   cadastra_prod[] @ignore
+  categoria       categoria?      @relation(fields: [fk_categoria_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "FK_produto_2")
+  grupo           grupo?          @relation(fields: [fk_grupo_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "FK_produto_3")
+  familia         familia?        @relation(fields: [fk_familia_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "FK_produto_4")
+
+  @@index([fk_categoria_id], map: "FK_produto_2")
+  @@index([fk_grupo_id], map: "FK_produto_3")
+  @@index([fk_familia_id], map: "FK_produto_4")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model reside {
+  fk_empresa_id  String?   @db.VarChar(255)
+  fk_endereco_id Int?
+  empresa        empresa?  @relation(fields: [fk_empresa_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "FK_reside_1")
+  endereco       endereco? @relation(fields: [fk_endereco_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "FK_reside_2")
+
+  @@index([fk_empresa_id], map: "FK_reside_1")
+  @@index([fk_endereco_id], map: "FK_reside_2")
+  @@ignore
+}
+
+model tipo_endereco {
+  id       Int        @id @default(autoincrement())
+  tipo     String?    @db.VarChar(255)
+  endereco endereco[]
+}
+
+model usuario_master {
+  id            String     @id @db.VarChar(255)
+  nome          String?    @db.VarChar(255)
+  sobrenome     String?    @db.VarChar(255)
+  email         String?    @db.VarChar(255)
+  senha         String?    @db.VarChar(255)
+  data_cadastro DateTime   @default(now()) @db.Timestamp(0)
+  cpf           String?    @db.VarChar(255)
+  cadastra      cadastra[] @ignore
+  empresa       empresa[]
 }
