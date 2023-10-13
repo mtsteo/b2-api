@@ -23,6 +23,9 @@ export class PJuridicaService {
           nome: createPJuridicaDto.nome,
           sobrenome: createPJuridicaDto.sobrenome
         },
+        include:{
+          
+        }
       });
       return 'User created';
     } catch (error) {

@@ -9,6 +9,7 @@ datasource db {
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model cadastra {
+  id String @unique
   fk_usuario_master_id String?         @db.VarChar(255)
   fk_funcionario_id    String?         @db.VarChar(255)
   data_cadastro        DateTime        @default(now()) @db.Timestamp(0)
@@ -17,7 +18,7 @@ model cadastra {
 
   @@index([fk_usuario_master_id], map: "FK_cadastra_1")
   @@index([fk_funcionario_id], map: "FK_cadastra_2")
-  @@ignore
+ 
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
@@ -156,6 +157,6 @@ model usuario_master {
   senha         String?    @db.VarChar(255)
   data_cadastro DateTime   @default(now()) @db.Timestamp(0)
   cpf           String?    @db.VarChar(255)
-  cadastra      cadastra[] @ignore
+  cadastra      cadastra[] 
   empresa       empresa[]
 }
