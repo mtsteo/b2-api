@@ -15,20 +15,20 @@ export class AuthService {
   ) {}
 
   async signIn(dto: AuthDto) {
-    const user = await this.prisma.user.findFirst({
+    const user = await this.prisma.usuario_master.findFirst({
       where: {
         email: dto.email,
       },
     });
 
     if (!user) throw new ForbiddenException('Usuário não encontrado!');
-    const passwordMatch = await argon.verify(user.password, dto.password);
+    const passwordMatch = await argon.verify(user.senha, dto.password);
     if (!passwordMatch) throw new ForbiddenException('Senha incorreta!');
     const token = this.signToken(user.id, user.email);
     return token;
   }
 
-  async signToken(userId: number, email: string): Promise<{}> {
+  async signToken(userId: string, email: string): Promise<{}> {
     const payload = {
       sub: userId,
       email,
