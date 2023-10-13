@@ -19,7 +19,7 @@ export class PJuridicaController {
 
   @Get('busca/:id')
   findOne(@Param('id') id: string) {
-    return this.pJuridicaService.findOne(+id);
+    return this.pJuridicaService.findOne(id);
   }
 
   @Patch(':id')

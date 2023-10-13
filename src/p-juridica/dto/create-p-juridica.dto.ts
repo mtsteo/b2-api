@@ -6,8 +6,15 @@ export class CreatePJuridicaDto {
     @IsEmail()
     email : string
     @IsNotEmpty()
-    password : string
+    password: string
     @IsNotEmpty()
     @IsString()
-    cnpj : string
+    cpf : string
+    @IsString()
+    @IsNotEmpty()
+    nome :string
+    @IsString()
+    @IsNotEmpty()
+    sobrenome: string
+    
 }

@@ -2,21 +2,26 @@ import { ForbiddenException, Injectable } from '@nestjs/common';
 import { CreatePJuridicaDto } from './dto/create-p-juridica.dto';
 import { UpdatePJuridicaDto } from './dto/update-p-juridica.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { randomUUID } from 'crypto';
 import * as argo from 'argon2';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 @Injectable()
 export class PJuridicaService {
   constructor(private prisma: PrismaService) {}
-  
+
   async create(createPJuridicaDto: CreatePJuridicaDto) {
+    
     const phash = await argo.hash(createPJuridicaDto.password);
     try {
-      await this.prisma.user.create({
+      await this.prisma.usuario_master.create({
         data: {
+          id : randomUUID(),
           email: createPJuridicaDto.email,
-          password: phash,
-          cpnj: createPJuridicaDto.cnpj,
+          senha: phash,
+          cpf: createPJuridicaDto.cpf,
+          nome: createPJuridicaDto.nome,
+          sobrenome: createPJuridicaDto.sobrenome
         },
       });
       return 'User created';
@@ -33,17 +38,17 @@ export class PJuridicaService {
     return `This action returns all pJuridica`;
   }
 
-  async findOne(id: number) {
-    const userData = await this.prisma.user.findFirst({
+  async findOne(id: string) {
+    const userData = await this.prisma.usuario_master.findFirst({
       where: {
         id: id,
       },
       include: {
-        produto: true,
+        // produto: true,
       },
     });
     if (userData) {
-      delete userData.password;
+      delete userData.senha;
       return userData;
     }
     throw new ForbiddenException({ error: 'usuário não entrado!' });
