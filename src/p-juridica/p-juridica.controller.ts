@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { PJuridicaService } from './p-juridica.service';
 import { CreatePJuridicaDto } from './dto/create-p-juridica.dto';
 import { UpdatePJuridicaDto } from './dto/update-p-juridica.dto';
+import { JwtGuard } from 'src/auth/guard';
 
 @Controller('pjuridica')
 export class PJuridicaController {
@@ -22,9 +23,10 @@ export class PJuridicaController {
     return this.pJuridicaService.findOne(id);
   }
 
+  // @UseGuards(JwtGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePJuridicaDto: UpdatePJuridicaDto) {
-    return this.pJuridicaService.update(+id, updatePJuridicaDto);
+    return this.pJuridicaService.update(id, updatePJuridicaDto);
   }
 
   @Delete(':id')

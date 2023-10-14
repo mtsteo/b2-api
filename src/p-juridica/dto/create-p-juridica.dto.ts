@@ -2,6 +2,8 @@ import { IsEmail, IsNotEmpty, IsString } from "class-validator"
 
 
 export class CreatePJuridicaDto {
+    @IsString()
+    id : string
     @IsNotEmpty()
     @IsEmail()
     email : string

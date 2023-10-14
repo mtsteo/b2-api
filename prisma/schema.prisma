@@ -7,15 +7,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Empresa {
   id             String        @id @db.VarChar(255)
   cnpj           String        @db.VarChar(255)
   nome_fantasia  String        @db.VarChar(255)
   razao_socia    String        @db.VarChar(255)
-  produto        Produto[]     @relation("empresa_produto")
+  funcionario    Funcionario[]
+  produto        Produto[]
   proprietarioId String        @db.VarChar(255)
-  Proprietario   Proprietario? @relation("proprietario_empresa", fields: [proprietarioId], references: [id])
+  Proprietario   Proprietario @relation(fields: [proprietarioId], references: [id])
 }
 
 model Endereco {
@@ -35,20 +35,22 @@ model Funcionario {
   sobrenome String    @db.VarChar(255)
   email     String    @db.VarChar(255)
   senha     String    @db.VarChar(255)
-  Produto   Produto[] @relation("funcionario_produto")
+  Produto   Produto[]
+  Empresa   Empresa?  @relation(fields: [empresaId], references: [id])
+  empresaId String?   @db.VarChar(255)
 }
 
 model Produto {
-  id             String       @id @db.VarChar(255)
-  nome           String       @db.VarChar(255)
-  descricao      String       @db.Text
-  ncm            String       @db.VarChar(255)
-  empresaId      String
-  empresa        Empresa      @relation("empresa_produto", fields: [empresaId], references: [id])
-  proprietarioId String
-  proprietario   Proprietario @relation("proprietario_produto", fields: [proprietarioId], references: [id])
-  funcionarioId  String
-  funcionario    Funcionario  @relation("funcionario_produto", fields: [funcionarioId], references: [id])
+  id             String        @id @db.VarChar(255)
+  nome           String        @db.VarChar(255)
+  descricao      String        @db.Text
+  ncm            String        @db.VarChar(255)
+  empresaId      String?
+  empresa        Empresa?      @relation(fields: [empresaId], references: [id])
+  proprietarioId String?
+  proprietario   Proprietario? @relation(fields: [proprietarioId], references: [id])
+  funcionarioId  String?
+  funcionario    Funcionario?  @relation(fields: [funcionarioId], references: [id])
 }
 
 model Proprietario {
@@ -59,6 +61,6 @@ model Proprietario {
   senha         String?   @db.VarChar(255)
   data_cadastro DateTime  @default(now()) @db.Timestamp(0)
   cpf           String?   @db.VarChar(255)
-  empresa       Empresa[] @relation("proprietario_empresa")
-  produto       Produto[] @relation("proprietario_produto")
+  empresa       Empresa[]
+  produto       Produto[]
 }

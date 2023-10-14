@@ -11,21 +11,17 @@ export class PJuridicaService {
   constructor(private prisma: PrismaService) {}
 
   async create(createPJuridicaDto: CreatePJuridicaDto) {
-    
     const phash = await argo.hash(createPJuridicaDto.password);
     try {
       await this.prisma.proprietario.create({
         data: {
-          id : randomUUID(),
+          id: randomUUID(),
           email: createPJuridicaDto.email,
           senha: phash,
           cpf: createPJuridicaDto.cpf,
           nome: createPJuridicaDto.nome,
-          sobrenome: createPJuridicaDto.sobrenome
+          sobrenome: createPJuridicaDto.sobrenome,
         },
-        include:{
-          
-        }
       });
       return 'User created';
     } catch (error) {
@@ -57,7 +53,18 @@ export class PJuridicaService {
     throw new ForbiddenException({ error: 'usuário não entrado!' });
   }
 
-  update(id: number, updatePJuridicaDto: UpdatePJuridicaDto) {
+  async update(id: string, updatePJuridicaDto: UpdatePJuridicaDto) {
+    try {
+      await this.prisma.proprietario.update({
+        where: {
+          id: id,
+        },
+        data: {
+          ...updatePJuridicaDto,
+        }
+      });
+    } catch (error) {}
+
     return `This action updates a #${id} pJuridica`;
   }
 

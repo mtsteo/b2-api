@@ -6,6 +6,8 @@ import { NegociacaoModule } from './negociacao/negociacao.module';
 import { HttpModule } from '@nestjs/axios';
 import { PJuridicaModule } from './p-juridica/p-juridica.module';
 import { ReceitawsModule } from './receitaws/receitaws.module';
+import { ProdutoModule } from './produto/produto.module';
+import { EmpresaModule } from './empresa/empresa.module';
 
 @Module({
   imports: [
@@ -18,6 +20,8 @@ import { ReceitawsModule } from './receitaws/receitaws.module';
     NegociacaoModule,
     PJuridicaModule,
     ReceitawsModule,
+    ProdutoModule,
+    EmpresaModule,
   ],
   controllers: [],
   providers: [],
