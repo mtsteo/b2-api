@@ -9,7 +9,7 @@ datasource db {
 
 model Empresa {
   id             String        @id @db.VarChar(255)
-  cnpj           String        @db.VarChar(255)
+  cnpj           String        @db.VarChar(255) @unique
   nome_fantasia  String        @db.VarChar(255)
   razao_socia    String        @db.VarChar(255)
   funcionario    Funcionario[]
@@ -60,7 +60,7 @@ model Proprietario {
   email         String?   @unique @db.VarChar(255)
   senha         String?   @db.VarChar(255)
   data_cadastro DateTime  @default(now()) @db.Timestamp(0)
-  cpf           String?   @db.VarChar(255)
+  cpf           String?   @db.VarChar(255) @unique
   empresa       Empresa[]
   produto       Produto[]
 }

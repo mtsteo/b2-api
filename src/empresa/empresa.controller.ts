@@ -4,7 +4,6 @@ import { CreateEmpresaDto } from './dto/create-empresa.dto';
 import { UpdateEmpresaDto } from './dto/update-empresa.dto';
 import { JwtGuard } from 'src/auth/guard';
 import { GetUser } from 'src/auth/decorator';
-import { Proprietario } from '@prisma/client';
 
 @Controller('empresa')
 export class EmpresaController {

@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { CreateEmpresaDto } from './dto/create-empresa.dto';
 import { UpdateEmpresaDto } from './dto/update-empresa.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { randomUUID } from 'crypto';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 @Injectable()
 export class EmpresaService {
@@ -20,6 +21,9 @@ export class EmpresaService {
         }
       })
     } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError){
+        if (error.code === 'P2002') throw new ForbiddenException('Empresa já se encontra cadastrada!')
+      }
       
     }
     return 'This action adds a new empresa';
