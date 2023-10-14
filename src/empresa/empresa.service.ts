@@ -1,10 +1,27 @@
 import { Injectable } from '@nestjs/common';
 import { CreateEmpresaDto } from './dto/create-empresa.dto';
 import { UpdateEmpresaDto } from './dto/update-empresa.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { randomUUID } from 'crypto';
 
 @Injectable()
 export class EmpresaService {
-  create(createEmpresaDto: CreateEmpresaDto) {
+  constructor(private prisma: PrismaService){}
+  
+  async create(userId : string, createEmpresaDto: CreateEmpresaDto) {
+    try {
+      await this.prisma.empresa.create({
+        data:{
+          id : randomUUID(),
+          cnpj : createEmpresaDto.cnpj,
+          razao_socia : createEmpresaDto.razao_social,
+          nome_fantasia : createEmpresaDto.nome_fantasia,
+          proprietarioId : userId,
+        }
+      })
+    } catch (error) {
+      
+    }
     return 'This action adds a new empresa';
   }
 
