@@ -14,7 +14,7 @@ export class PJuridicaService {
     
     const phash = await argo.hash(createPJuridicaDto.password);
     try {
-      await this.prisma.usuario_master.create({
+      await this.prisma.proprietario.create({
         data: {
           id : randomUUID(),
           email: createPJuridicaDto.email,
@@ -42,7 +42,7 @@ export class PJuridicaService {
   }
 
   async findOne(id: string) {
-    const userData = await this.prisma.usuario_master.findFirst({
+    const userData = await this.prisma.proprietario.findFirst({
       where: {
         id: id,
       },

@@ -13,16 +13,28 @@ services:
   #     - db
   #   volumes:
   #     - ./src:/api/src
+  # db:
+  #   image: postgres
+  #   restart: always
+  #   environment:
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: 123
+  #     POSTGRES_DB: nest
+  #   container_name: postgres-db
+  #   ports:
+  #     - '5432:5432'
   db:
-    image: postgres
+    image: mysql
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 123
-      POSTGRES_DB: nest
-    container_name: postgres-db
+      MYSQL_ROOT_PASSWORD: testeb2b
+      MYSQL_DATABASE: b2b
+      MYSQL_USER: testeb2b
+      MYSQL_PASSWORD: testeb2b
+
+    container_name: mysql
     ports:
-      - '5432:5432'
+      - '3306:3306'
   # pgadmin:
   #   image: dpage/pgadmin4
   #   restart: always
