@@ -9,13 +9,15 @@ datasource db {
 
 model Empresa {
   id             String        @id @db.VarChar(255)
-  cnpj           String        @db.VarChar(255) @unique
+  cnpj           String        @unique @db.VarChar(255)
   nome_fantasia  String        @db.VarChar(255)
-  razao_socia    String        @db.VarChar(255)
+  razao_social    String        @db.VarChar(255)
+  proprietarioId String        @db.VarChar(255)
+  Proprietario   Proprietario  @relation(fields: [proprietarioId], references: [id])
   funcionario    Funcionario[]
   produto        Produto[]
-  proprietarioId String        @db.VarChar(255)
-  Proprietario   Proprietario @relation(fields: [proprietarioId], references: [id])
+
+  @@index([proprietarioId], map: "Empresa_proprietarioId_fkey")
 }
 
 model Endereco {
@@ -35,9 +37,11 @@ model Funcionario {
   sobrenome String    @db.VarChar(255)
   email     String    @db.VarChar(255)
   senha     String    @db.VarChar(255)
-  Produto   Produto[]
-  Empresa   Empresa?  @relation(fields: [empresaId], references: [id])
   empresaId String?   @db.VarChar(255)
+  Empresa   Empresa?  @relation(fields: [empresaId], references: [id])
+  Produto   Produto[]
+
+  @@index([empresaId], map: "Funcionario_empresaId_fkey")
 }
 
 model Produto {
@@ -46,11 +50,15 @@ model Produto {
   descricao      String        @db.Text
   ncm            String        @db.VarChar(255)
   empresaId      String?
-  empresa        Empresa?      @relation(fields: [empresaId], references: [id])
   proprietarioId String?
-  proprietario   Proprietario? @relation(fields: [proprietarioId], references: [id])
   funcionarioId  String?
+  empresa        Empresa?      @relation(fields: [empresaId], references: [id])
   funcionario    Funcionario?  @relation(fields: [funcionarioId], references: [id])
+  proprietario   Proprietario? @relation(fields: [proprietarioId], references: [id])
+
+  @@index([empresaId], map: "Produto_empresaId_fkey")
+  @@index([funcionarioId], map: "Produto_funcionarioId_fkey")
+  @@index([proprietarioId], map: "Produto_proprietarioId_fkey")
 }
 
 model Proprietario {
@@ -60,7 +68,7 @@ model Proprietario {
   email         String?   @unique @db.VarChar(255)
   senha         String?   @db.VarChar(255)
   data_cadastro DateTime  @default(now()) @db.Timestamp(0)
-  cpf           String?   @db.VarChar(255) @unique
+  cpf           String?   @unique @db.VarChar(255)
   empresa       Empresa[]
   produto       Produto[]
 }

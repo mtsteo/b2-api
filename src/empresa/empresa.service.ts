@@ -15,7 +15,7 @@ export class EmpresaService {
         data:{
           id : randomUUID(),
           cnpj : createEmpresaDto.cnpj,
-          razao_socia : createEmpresaDto.razao_social,
+          razao_social: createEmpresaDto.razao_social,
           nome_fantasia : createEmpresaDto.nome_fantasia,
           proprietarioId : userId,
         }
