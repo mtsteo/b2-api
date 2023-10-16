@@ -1,16 +1,16 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { CreatePJuridicaDto } from './dto/create-p-juridica.dto';
-import { UpdatePJuridicaDto } from './dto/update-p-juridica.dto';
+import { CreateProprietarioDto } from './dto/create-proprietario.dto';
+import { UpdateProprietarioDto } from './dto/update-proprietario.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { randomUUID } from 'crypto';
 import * as argo from 'argon2';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 @Injectable()
-export class PJuridicaService {
+export class ProprietarioService {
   constructor(private prisma: PrismaService) {}
 
-  async create(createPJuridicaDto: CreatePJuridicaDto) {
+  async create(createPJuridicaDto: CreateProprietarioDto) {
     const phash = await argo.hash(createPJuridicaDto.password);
     try {
       await this.prisma.proprietario.create({
@@ -53,7 +53,7 @@ export class PJuridicaService {
     throw new ForbiddenException({ error: 'usuário não entrado!' });
   }
 
-  async update(id: string, updatePJuridicaDto: UpdatePJuridicaDto) {
+  async update(id: string, updatePJuridicaDto: UpdateProprietarioDto) {
     try {
       await this.prisma.proprietario.update({
         where: {

@@ -1,15 +1,15 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
-import { PJuridicaService } from './p-juridica.service';
-import { CreatePJuridicaDto } from './dto/create-p-juridica.dto';
-import { UpdatePJuridicaDto } from './dto/update-p-juridica.dto';
+import { ProprietarioService } from './proprietario.service';
+import { CreateProprietarioDto } from './dto/create-proprietario.dto';
+import { UpdateProprietarioDto } from './dto/update-proprietario.dto';
 import { JwtGuard } from 'src/auth/guard';
 
 @Controller('pjuridica')
-export class PJuridicaController {
-  constructor(private readonly pJuridicaService: PJuridicaService) {}
+export class ProprietarioController {
+  constructor(private readonly pJuridicaService: ProprietarioService) {}
 
   @Post('/cadastro')
-  create(@Body() createPJuridicaDto: CreatePJuridicaDto) {
+  create(@Body() createPJuridicaDto: CreateProprietarioDto) {
     return this.pJuridicaService.create(createPJuridicaDto);
   }
 
@@ -25,7 +25,7 @@ export class PJuridicaController {
 
   // @UseGuards(JwtGuard)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePJuridicaDto: UpdatePJuridicaDto) {
+  update(@Param('id') id: string, @Body() updatePJuridicaDto: UpdateProprietarioDto) {
     return this.pJuridicaService.update(id, updatePJuridicaDto);
   }
 

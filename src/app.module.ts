@@ -4,7 +4,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
 import { NegociacaoModule } from './negociacao/negociacao.module';
 import { HttpModule } from '@nestjs/axios';
-import { PJuridicaModule } from './p-juridica/p-juridica.module';
+import { ProprietarioModule } from './proprietario/proprietario.module';
 import { ReceitawsModule } from './receitaws/receitaws.module';
 import { ProdutoModule } from './produto/produto.module';
 import { EmpresaModule } from './empresa/empresa.module';
@@ -18,7 +18,7 @@ import { EmpresaModule } from './empresa/empresa.module';
     AuthModule,
     PrismaModule,
     NegociacaoModule,
-    PJuridicaModule,
+    ProprietarioModule,
     ReceitawsModule,
     ProdutoModule,
     EmpresaModule,
