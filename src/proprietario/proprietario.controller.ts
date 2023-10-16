@@ -4,11 +4,11 @@ import { CreateProprietarioDto } from './dto/create-proprietario.dto';
 import { UpdateProprietarioDto } from './dto/update-proprietario.dto';
 import { JwtGuard } from 'src/auth/guard';
 
-@Controller('pjuridica')
+@Controller('proprietario')
 export class ProprietarioController {
   constructor(private readonly pJuridicaService: ProprietarioService) {}
 
-  @Post('/cadastro')
+  @Post()
   create(@Body() createPJuridicaDto: CreateProprietarioDto) {
     return this.pJuridicaService.create(createPJuridicaDto);
   }
