@@ -12,7 +12,6 @@ export class EmpresaController {
   @UseGuards(JwtGuard)
   @Post()
   create(@GetUserId() userId : string, @Body() createEmpresaDto: CreateEmpresaDto) {
-    console.log(userId)
     return this.empresaService.create(userId, createEmpresaDto);
   }
 
