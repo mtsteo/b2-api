@@ -37,6 +37,22 @@ export class ProprietarioService {
     return `This action returns all pJuridica`;
   }
 
+  async ProfileData(id: string) {
+    const userData = await this.prisma.proprietario.findFirst({
+      where: {
+       id : id
+      },
+      include: {
+        // produto: true,
+        // empresa: true,
+      },
+    });
+    if (userData) {
+      delete userData.senha;
+      return userData;
+    }
+    throw new ForbiddenException({ error: 'usuário não entrado!' });
+  }
   async findOne(id: string) {
     const userData = await this.prisma.proprietario.findFirst({
       where: {
@@ -61,7 +77,7 @@ export class ProprietarioService {
         },
         data: {
           ...updatePJuridicaDto,
-        }
+        },
       });
     } catch (error) {}
 
