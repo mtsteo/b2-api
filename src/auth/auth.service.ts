@@ -24,13 +24,12 @@ export class AuthService {
     const passwordMatch = await argon.verify(user.senha, dto.password);
     if (!passwordMatch) throw new ForbiddenException('Senha incorreta!');
     delete user.senha, user.data_cadastro;
-    return this.signToken(user.id, user.email);
+    return this.signToken(user.id);
   }
 
-  async signToken(userId: string, email: string): Promise<{}> {
+  async signToken(userId: string): Promise<{}> {
     const payload = {
       id : userId,
-      email,
     }
     const token = await this.jwt.signAsync(payload, {
       // expiresIn: '15m',
