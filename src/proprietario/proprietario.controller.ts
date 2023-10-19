@@ -3,6 +3,7 @@ import { ProprietarioService } from './proprietario.service';
 import { CreateProprietarioDto } from './dto/create-proprietario.dto';
 import { UpdateProprietarioDto } from './dto/update-proprietario.dto';
 import { JwtGuard } from 'src/auth/guard';
+import { GetUserId } from 'src/auth/decorator';
 
 @Controller('proprietario')
 export class ProprietarioController {
@@ -16,6 +17,11 @@ export class ProprietarioController {
   @Get()
   findAll() {
     return this.pJuridicaService.findAll();
+  }
+
+  @Get('perfil')
+  ProfileData(@GetUserId() id: string) {
+    return this.pJuridicaService.ProfileData(id);
   }
 
   @Get('busca/:id')
