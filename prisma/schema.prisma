@@ -11,10 +11,10 @@ model Empresa {
   id             String        @id @db.VarChar(255)
   cnpj           String        @unique @db.VarChar(255)
   nome_fantasia  String        @db.VarChar(255)
-  razao_social    String        @db.VarChar(255)
+  razao_social   String        @db.VarChar(255)
   proprietarioId String        @db.VarChar(255)
   Proprietario   Proprietario  @relation(fields: [proprietarioId], references: [id])
-  funcionario    Funcionario[]
+  colaborador    Colaborador[]
   produto        Produto[]
 
   @@index([proprietarioId], map: "Empresa_proprietarioId_fkey")
@@ -31,7 +31,7 @@ model Endereco {
   refer  String? @db.VarChar(255)
 }
 
-model Funcionario {
+model Colaborador {
   id        String    @id @db.VarChar(255)
   nome      String    @db.VarChar(255)
   sobrenome String    @db.VarChar(255)
@@ -41,7 +41,7 @@ model Funcionario {
   Empresa   Empresa?  @relation(fields: [empresaId], references: [id])
   Produto   Produto[]
 
-  @@index([empresaId], map: "Funcionario_empresaId_fkey")
+  @@index([empresaId], map: "Colaborador_empresaId_fkey")
 }
 
 model Produto {
@@ -51,24 +51,24 @@ model Produto {
   ncm            String        @db.VarChar(255)
   empresaId      String?
   proprietarioId String?
-  funcionarioId  String?
+  colaboradorId  String?
   empresa        Empresa?      @relation(fields: [empresaId], references: [id])
-  funcionario    Funcionario?  @relation(fields: [funcionarioId], references: [id])
+  colaborador    Colaborador?  @relation(fields: [colaboradorId], references: [id])
   proprietario   Proprietario? @relation(fields: [proprietarioId], references: [id])
 
   @@index([empresaId], map: "Produto_empresaId_fkey")
-  @@index([funcionarioId], map: "Produto_funcionarioId_fkey")
+  @@index([colaboradorId], map: "Produto_colaboradorId_fkey")
   @@index([proprietarioId], map: "Produto_proprietarioId_fkey")
 }
 
 model Proprietario {
   id            String    @id @db.VarChar(255)
-  nome          String?   @db.VarChar(255)
-  sobrenome     String?   @db.VarChar(255)
-  email         String?   @unique @db.VarChar(255)
-  senha         String?   @db.VarChar(255)
+  nome          String    @db.VarChar(255)
+  sobrenome     String    @db.VarChar(255)
+  email         String    @unique @db.VarChar(255)
+  senha         String    @db.VarChar(255)
   data_cadastro DateTime  @default(now()) @db.Timestamp(0)
-  cpf           String?   @unique @db.VarChar(255)
+  cpf           String    @unique @db.VarChar(255)
   empresa       Empresa[]
   produto       Produto[]
 }
