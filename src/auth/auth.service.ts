@@ -23,14 +23,12 @@ export class AuthService {
     if (!user) throw new ForbiddenException('Usuário não encontrado!');
     const passwordMatch = await argon.verify(user.senha, dto.password);
     if (!passwordMatch) throw new ForbiddenException('Senha incorreta!');
-    delete user.senha, user.data_cadastro
-    const token = this.signToken(user);
+    delete user.senha, user.data_cadastro;
+    const token = this.signToken(user.email);
     return token;
   }
 
-  async signToken(userData: object): Promise<{}> {
-    
-
+  async signToken(userData: string): Promise<{}> {
     const token = await this.jwt.signAsync(userData, {
       // expiresIn: '15m',
       secret: this.config.get('JWT_SECRET'),
@@ -38,7 +36,6 @@ export class AuthService {
 
     return {
       access_token: token,
-      data: userData
     };
   }
 }
