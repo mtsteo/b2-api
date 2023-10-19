@@ -40,11 +40,11 @@ export class ProprietarioService {
   async ProfileData(id: string) {
     const userData = await this.prisma.proprietario.findFirst({
       where: {
-       id : id
+        id: id,
       },
       include: {
         // produto: true,
-        // empresa: true,
+        empresa: true,
       },
     });
     if (userData) {

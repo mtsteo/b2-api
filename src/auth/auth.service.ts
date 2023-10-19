@@ -23,7 +23,6 @@ export class AuthService {
     if (!user) throw new ForbiddenException('Usuário não encontrado!');
     const passwordMatch = await argon.verify(user.senha, dto.password);
     if (!passwordMatch) throw new ForbiddenException('Senha incorreta!');
-    delete user.senha, user.data_cadastro;
     return this.signToken(user.id);
   }
 
