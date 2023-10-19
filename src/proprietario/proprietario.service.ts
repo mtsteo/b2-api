@@ -10,17 +10,17 @@ import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 export class ProprietarioService {
   constructor(private prisma: PrismaService) {}
 
-  async create(createPJuridicaDto: CreateProprietarioDto) {
-    const phash = await argo.hash(createPJuridicaDto.password);
+  async create(createProprietarioDto: CreateProprietarioDto) {
+    const phash = await argo.hash(createProprietarioDto.password);
     try {
       await this.prisma.proprietario.create({
         data: {
           id: randomUUID(),
-          email: createPJuridicaDto.email,
+          email: createProprietarioDto.email,
           senha: phash,
-          cpf: createPJuridicaDto.cpf,
-          nome: createPJuridicaDto.nome,
-          sobrenome: createPJuridicaDto.sobrenome,
+          cpf: createProprietarioDto.cpf,
+          nome: createProprietarioDto.nome,
+          sobrenome: createProprietarioDto.sobrenome,
         },
       });
       return 'User created';
