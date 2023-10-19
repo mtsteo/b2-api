@@ -3,7 +3,7 @@ import { EmpresaService } from './empresa.service';
 import { CreateEmpresaDto } from './dto/create-empresa.dto';
 import { UpdateEmpresaDto } from './dto/update-empresa.dto';
 import { JwtGuard } from 'src/auth/guard';
-import { GetUser } from 'src/auth/decorator';
+import { GetUserId } from 'src/auth/decorator';
 
 @Controller('empresa')
 export class EmpresaController {
@@ -11,7 +11,8 @@ export class EmpresaController {
 
   @UseGuards(JwtGuard)
   @Post()
-  create(@GetUser() userId : string, @Body() createEmpresaDto: CreateEmpresaDto) {
+  create(@GetUserId() userId : string, @Body() createEmpresaDto: CreateEmpresaDto) {
+    console.log(userId)
     return this.empresaService.create(userId, createEmpresaDto);
   }
 
