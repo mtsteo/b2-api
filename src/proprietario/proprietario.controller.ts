@@ -19,6 +19,7 @@ export class ProprietarioController {
     return this.pJuridicaService.findAll();
   }
 
+  @UseGuards(JwtGuard)
   @Get('perfil')
   ProfileData(@GetUserId() id: string) {
     return this.pJuridicaService.ProfileData(id);
