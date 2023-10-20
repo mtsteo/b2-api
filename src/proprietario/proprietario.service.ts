@@ -80,7 +80,9 @@ export class ProprietarioService {
           id: id,
         },
         data: {
-          
+          colaboradores: {
+            connect: [{ id: updatePJuridicaDto.colaboradorId }],
+          },
         },
       });
       return `This action updates a #${id} pJuridica`;

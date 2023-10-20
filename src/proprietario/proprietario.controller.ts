@@ -33,7 +33,6 @@ export class ProprietarioController {
   @UseGuards(JwtGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePJuridicaDto: UpdateProprietarioDto) {
-    console.log(id, updatePJuridicaDto)
     return this.ProprietarioService.update(id, updatePJuridicaDto);
   }
 

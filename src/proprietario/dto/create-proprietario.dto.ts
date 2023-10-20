@@ -17,5 +17,7 @@ export class CreateProprietarioDto {
     @IsString()
     @IsNotEmpty()
     sobrenome: string
+    @IsString()
+    colaboradorId :string
     
 }
