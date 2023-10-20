@@ -2,13 +2,14 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { ColaboradorService } from './colaborador.service';
 import { CreateColaboradorDto } from './dto/create-colaborador.dto';
 import { UpdateColaboradorDto } from './dto/update-colaborador.dto';
+import { GetUserId } from 'src/auth/decorator';
 
 @Controller('colaborador')
 export class ColaboradorController {
   constructor(private readonly colaboradorService: ColaboradorService) {}
 
   @Post()
-  create(@Body() createColaboradorDto: CreateColaboradorDto) {
+  create(@GetUserId() id, @Body() createColaboradorDto: CreateColaboradorDto) {
     return this.colaboradorService.create(createColaboradorDto);
   }
 
@@ -22,9 +23,9 @@ export class ColaboradorController {
     return this.colaboradorService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateColaboradorDto: UpdateColaboradorDto) {
-    return this.colaboradorService.update(+id, updateColaboradorDto);
+  @Patch()
+  update(@GetUserId() id:  string, @Body() updateColaboradorDto: UpdateColaboradorDto) {
+    return this.colaboradorService.update(id, updateColaboradorDto);
   }
 
   @Delete(':id')

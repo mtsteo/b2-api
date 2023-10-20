@@ -5,8 +5,9 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ColaboradorService {
-  constructor(private prisma : PrismaService){}
+  constructor(private prisma: PrismaService) {}
   create(createColaboradorDto: CreateColaboradorDto) {
+    
     return 'This action adds a new colaborador';
   }
 
@@ -18,7 +19,7 @@ export class ColaboradorService {
     return `This action returns a #${id} colaborador`;
   }
 
-  update(id: number, updateColaboradorDto: UpdateColaboradorDto) {
+  update(id: string, updateColaboradorDto: UpdateColaboradorDto) {
     return `This action updates a #${id} colaborador`;
   }
 

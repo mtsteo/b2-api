@@ -43,8 +43,12 @@ export class ProprietarioService {
         id: id,
       },
       include: {
-        // produto: true,
         empresa: true,
+        colaboradores: {
+          select: {
+            nome: true,
+          },
+        },
       },
     });
     if (userData) {
@@ -76,12 +80,11 @@ export class ProprietarioService {
           id: id,
         },
         data: {
-          ...updatePJuridicaDto,
+          
         },
       });
+      return `This action updates a #${id} pJuridica`;
     } catch (error) {}
-
-    return `This action updates a #${id} pJuridica`;
   }
 
   remove(id: number) {
