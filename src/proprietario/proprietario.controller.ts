@@ -36,6 +36,12 @@ export class ProprietarioController {
     return this.ProprietarioService.update(id, updatePJuridicaDto);
   }
 
+  @UseGuards(JwtGuard)
+  @Patch('colaborador/:id')
+  updateColaborador(@Param('id') id: string, @Body() updatePJuridicaDto: UpdateProprietarioDto) {
+    return this.ProprietarioService.updateColaborador(id, updatePJuridicaDto);
+  }
+
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.ProprietarioService.remove(+id);

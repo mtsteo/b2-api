@@ -74,12 +74,27 @@ export class ProprietarioService {
   }
 
   async update(id: string, updatePJuridicaDto: UpdateProprietarioDto) {
+    console.log(updatePJuridicaDto,id)
     try {
       await this.prisma.proprietario.update({
         where: {
           id: id,
         },
         data: {
+          ...updatePJuridicaDto,
+        },
+      });
+      return `This action updates a #${id} pJuridica`;
+    } catch (error) {}
+  }
+  async updateColaborador(id: string, updatePJuridicaDto: UpdateProprietarioDto) {
+    try {
+      await this.prisma.proprietario.update({
+        where: {
+          id: id,
+        },
+        data: {
+  
           colaboradores: {
             connect: [{ id: updatePJuridicaDto.colaboradorId }],
           },
