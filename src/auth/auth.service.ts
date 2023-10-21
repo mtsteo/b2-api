@@ -14,21 +14,21 @@ export class AuthService {
   ) {}
 
   async signIn(dto: AuthDto) {
-    const user = await this.prisma.proprietario.findFirst({
+    const proprietario = await this.prisma.proprietario.findFirst({
       where: {
         email: dto.email,
       },
     });
 
-    if (!user) throw new ForbiddenException('Usuário não encontrado!');
-    const passwordMatch = await argon.verify(user.senha, dto.password);
+    if (!proprietario) throw new ForbiddenException('Usuário não encontrado!');
+    const passwordMatch = await argon.verify(proprietario.senha, dto.password);
     if (!passwordMatch) throw new ForbiddenException('Senha incorreta!');
-    return this.signToken(user.id);
+    return this.signToken(proprietario.id);
   }
 
-  async signToken(userId: string): Promise<{}> {
+  async signToken(proprietarioId: string): Promise<{}> {
     const payload = {
-      id : userId,
+      id : proprietarioId,
     }
     const token = await this.jwt.signAsync(payload, {
       // expiresIn: '15m',
