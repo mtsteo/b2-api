@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Empresa {
-  id             String       @id @db.VarChar(255)
+  id             String       @id  @db.VarChar(255)
   cnpj           String       @unique @db.VarChar(255)
   nome_fantasia  String       @db.VarChar(255)
   razao_social   String       @db.VarChar(255)
@@ -36,12 +36,10 @@ model Produto {
   descricao      String        @db.Text
   ncm            String        @db.VarChar(255)
   empresaId      String
-  proprietarioId String?
   empresa        Empresa?       @relation(fields: [empresaId], references: [id])
-  proprietario   Proprietario? @relation(fields: [proprietarioId], references: [id])
-
-  @@index([empresaId], map: "Produto_empresaId_fkey")
-  @@index([proprietarioId], map: "Produto_proprietarioId_fkey")
+  // proprietarioId String?
+  // proprietario   Proprietario? @relation(fields: [proprietarioId], references: [id])
+  // @@index([proprietarioId], map: "Produto_proprietarioId_fkey")
 }
 
 model Proprietario {
@@ -54,7 +52,7 @@ model Proprietario {
   cpf           String         @unique @db.VarChar(255)
   autorizanteId String?
   empresa       Empresa[]
-  produto       Produto[]
+  // produto       Produto[]
   colaborador   Proprietario?  @relation("a", fields: [autorizanteId], references: [id])
   colaboradores Proprietario[] @relation("a")
 

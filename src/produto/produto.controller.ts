@@ -11,7 +11,6 @@ export class ProdutoController {
   @UseGuards(JwtGuard)
   @Post()
   create(@Body() createProdutoDto: CreateProdutoDto) {
-    console.log(createProdutoDto)
     return this.produtoService.create(createProdutoDto);
   }
 

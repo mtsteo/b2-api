@@ -15,6 +15,8 @@ async  create(createProdutoDto: CreateProdutoDto) {
           nome: createProdutoDto.nome,
           descricao: createProdutoDto.descricao,
           ncm: createProdutoDto.ncm,
+          empresaId : createProdutoDto.empresaId
+          
         },
       });
     } catch (error) {

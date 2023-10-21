@@ -10,4 +10,7 @@ export class CreateProdutoDto {
     @IsString()
     @IsNotEmpty()
     ncm : string
+    @IsNotEmpty()
+    @IsString()
+    empresaId : string
 }
