@@ -7,3 +7,11 @@ export const GetUserId = createParamDecorator(
     return request.user.id;
   },
 );
+
+export const GetEmpresaId = createParamDecorator(
+  (data: string, ctx: ExecutionContext) => {
+    const request = ctx.switchToHttp().getRequest();
+    console.log(request.user.autorizanteId)
+    return request.user.autorizanteId ;
+  },
+);
