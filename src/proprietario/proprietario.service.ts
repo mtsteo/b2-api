@@ -44,11 +44,7 @@ export class ProprietarioService {
       },
       include: {
         empresa: true,
-        colaboradores: {
-          select: {
-            nome: true,
-          },
-        },
+        
       },
     });
     if (userData) {
@@ -95,9 +91,7 @@ export class ProprietarioService {
         },
         data: {
   
-          colaboradores: {
-            connect: [{ id: updatePJuridicaDto.colaboradorId }],
-          },
+        
         },
       });
       return `This action updates a #${id} pJuridica`;

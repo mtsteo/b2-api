@@ -6,8 +6,18 @@ import { PrismaService } from 'src/prisma/prisma.service';
 @Injectable()
 export class ColaboradorService {
   constructor(private prisma: PrismaService) {}
-  create(createColaboradorDto: CreateColaboradorDto) {
-    
+  async create(createColaboradorDto: CreateColaboradorDto) {
+    try {
+     await this.prisma.empresaColaborador.create({
+        data:{
+          colaboradorId : createColaboradorDto.colaboradorId,
+          empresaId : createColaboradorDto.empresaId.toString()
+        }
+      })
+      return "Ok"
+  } catch (error) {
+      
+    }
     return 'This action adds a new colaborador';
   }
 

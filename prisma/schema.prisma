@@ -8,15 +8,36 @@ datasource db {
 }
 
 model Empresa {
-  id             String       @id  @db.VarChar(255)
+  id             String       @id @db.VarChar(255)
   cnpj           String       @unique @db.VarChar(255)
   nome_fantasia  String       @db.VarChar(255)
   razao_social   String       @db.VarChar(255)
   proprietarioId String       @db.VarChar(255)
   Proprietario   Proprietario @relation(fields: [proprietarioId], references: [id])
   produto        Produto[]
+  colaboradores EmpresaColaborador[]
 
   @@index([proprietarioId], map: "Empresa_proprietarioId_fkey")
+}
+
+model Proprietario {
+  id            String         @id @db.VarChar(255)
+  nome          String         @db.VarChar(255)
+  sobrenome     String         @db.VarChar(255)
+  email         String         @unique @db.VarChar(255)
+  senha         String         @db.VarChar(255)
+  data_cadastro DateTime       @default(now()) @db.Timestamp(0)
+  cpf           String         @unique @db.VarChar(255)
+  empresa       Empresa[]
+  colaboradres  EmpresaColaborador[]
+}
+
+model EmpresaColaborador {
+  colaborador   Proprietario @relation(fields: [colaboradorId], references: [id])
+  colaboradorId String
+  empresaId     String
+  empresa       Empresa      @relation(fields: [empresaId], references: [id])
+  @@id([colaboradorId,empresaId])
 }
 
 model Endereco {
@@ -31,30 +52,10 @@ model Endereco {
 }
 
 model Produto {
-  id             String        @id @db.VarChar(255)
-  nome           String        @db.VarChar(255)
-  descricao      String        @db.Text
-  ncm            String        @db.VarChar(255)
-  empresaId      String
-  empresa        Empresa?       @relation(fields: [empresaId], references: [id])
-  // proprietarioId String?
-  // proprietario   Proprietario? @relation(fields: [proprietarioId], references: [id])
-  // @@index([proprietarioId], map: "Produto_proprietarioId_fkey")
-}
-
-model Proprietario {
-  id            String         @id @db.VarChar(255)
-  nome          String         @db.VarChar(255)
-  sobrenome     String         @db.VarChar(255)
-  email         String         @unique @db.VarChar(255)
-  senha         String         @db.VarChar(255)
-  data_cadastro DateTime       @default(now()) @db.Timestamp(0)
-  cpf           String         @unique @db.VarChar(255)
-  autorizanteId String?
-  empresa       Empresa[]
-  // produto       Produto[]
-  colaborador   Proprietario?  @relation("a", fields: [autorizanteId], references: [id])
-  colaboradores Proprietario[] @relation("a")
-
-  @@index([autorizanteId], map: "Proprietario_colaboradoId_fkey")
+  id        String   @id @db.VarChar(255)
+  nome      String   @db.VarChar(255)
+  descricao String   @db.Text
+  ncm       String   @db.VarChar(255)
+  empresaId String
+  empresa   Empresa? @relation(fields: [empresaId], references: [id])
 }

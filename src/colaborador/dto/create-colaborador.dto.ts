@@ -2,6 +2,8 @@ import { IsNotEmpty, IsString } from "class-validator";
 
 export class CreateColaboradorDto {
     @IsNotEmpty()
-    @IsString()
-    cpf : string 
+    colaboradorId : string 
+    @IsNotEmpty()
+   
+    empresaId : String
 }

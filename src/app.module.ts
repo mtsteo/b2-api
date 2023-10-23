@@ -8,6 +8,7 @@ import { ProprietarioModule } from './proprietario/proprietario.module';
 import { ReceitawsModule } from './receitaws/receitaws.module';
 import { ProdutoModule } from './produto/produto.module';
 import { EmpresaModule } from './empresa/empresa.module';
+import { ColaboradorModule } from './colaborador/colaborador.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { EmpresaModule } from './empresa/empresa.module';
     ReceitawsModule,
     ProdutoModule,
     EmpresaModule,
+    ColaboradorModule
   ],
   controllers: [],
   providers: [],
