@@ -8,26 +8,27 @@ datasource db {
 }
 
 model Empresa {
-  id             String       @id @db.VarChar(255)
-  cnpj           String       @unique @db.VarChar(255)
-  nome_fantasia  String       @db.VarChar(255)
-  razao_social   String       @db.VarChar(255)
-  proprietarioId String       @db.VarChar(255)
-  Proprietario   Proprietario @relation(fields: [proprietarioId], references: [id])
+  id             String               @id @db.VarChar(255)
+  cnpj           String               @unique @db.VarChar(255)
+  nome_fantasia  String               @db.VarChar(255)
+  razao_social   String               @db.VarChar(255)
+  proprietarioId String               @db.VarChar(255)
+  Proprietario   Proprietario         @relation(fields: [proprietarioId], references: [id])
   produto        Produto[]
-  colaboradores EmpresaColaborador[]
+  colaboradores  EmpresaColaborador[]
+  endereco       Endereco[]
 
   @@index([proprietarioId], map: "Empresa_proprietarioId_fkey")
 }
 
 model Proprietario {
-  id            String         @id @db.VarChar(255)
-  nome          String         @db.VarChar(255)
-  sobrenome     String         @db.VarChar(255)
-  email         String         @unique @db.VarChar(255)
-  senha         String         @db.VarChar(255)
-  data_cadastro DateTime       @default(now()) @db.Timestamp(0)
-  cpf           String         @unique @db.VarChar(255)
+  id            String               @id @db.VarChar(255)
+  nome          String               @db.VarChar(255)
+  sobrenome     String               @db.VarChar(255)
+  email         String               @unique @db.VarChar(255)
+  senha         String               @db.VarChar(255)
+  data_cadastro DateTime             @default(now()) @db.Timestamp(0)
+  cpf           String               @unique @db.VarChar(255)
   empresa       Empresa[]
   colaboradres  EmpresaColaborador[]
 }
@@ -37,18 +38,22 @@ model EmpresaColaborador {
   colaboradorId String
   empresaId     String
   empresa       Empresa      @relation(fields: [empresaId], references: [id])
-  @@id([colaboradorId,empresaId])
+
+  @@id([colaboradorId, empresaId])
 }
 
 model Endereco {
-  id     Int     @id @default(autoincrement())
-  cep    String  @db.VarChar(255)
-  uf     String  @db.Char(2)
-  cidade String  @db.VarChar(255)
-  bairro String  @db.VarChar(255)
-  rua    String  @db.VarChar(255)
-  num    String  @db.VarChar(255)
-  refer  String? @db.VarChar(255)
+  id         Int     @id @default(autoincrement())
+  cep        String  @db.VarChar(255)
+  uf         String  @db.Char(2)
+  cidade     String  @db.VarChar(255)
+  bairro     String  @db.VarChar(255)
+  rua        String  @db.VarChar(255)
+  num        String  @db.VarChar(255)
+  refer      String? @db.VarChar(255)
+  enderecoId Int 
+  Empresa   Empresa? @relation(fields: [empresaId], references: [id])
+  empresaId String?  @db.VarChar(255)
 }
 
 model Produto {
