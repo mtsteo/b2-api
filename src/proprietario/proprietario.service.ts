@@ -70,7 +70,6 @@ export class ProprietarioService {
   }
 
   async update(id: string, updatePJuridicaDto: UpdateProprietarioDto) {
-    console.log(updatePJuridicaDto,id)
     try {
       await this.prisma.proprietario.update({
         where: {
