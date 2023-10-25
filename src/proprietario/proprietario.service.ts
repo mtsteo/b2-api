@@ -1,5 +1,5 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { CreateProprietarioDto } from './dto/create-proprietario.dto';
+import { CreateEnderecoDto, CreateProprietarioDto } from './dto/create-proprietario.dto';
 import { UpdateProprietarioDto } from './dto/update-proprietario.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { randomUUID } from 'crypto';
@@ -44,7 +44,6 @@ export class ProprietarioService {
       },
       include: {
         empresa: true,
-        
       },
     });
     if (userData) {
@@ -88,10 +87,7 @@ export class ProprietarioService {
         where: {
           id: id,
         },
-        data: {
-  
-        
-        },
+        data: {},
       });
       return `This action updates a #${id} pJuridica`;
     } catch (error) {}
@@ -99,5 +95,11 @@ export class ProprietarioService {
 
   remove(id: number) {
     return `This action removes a #${id} pJuridica`;
+  }
+
+  createEndereco(userId: string, CreateEnderecoDto: CreateEnderecoDto) {
+    try {
+
+    } catch (error) {}
   }
 }

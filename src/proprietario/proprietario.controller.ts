@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { ProprietarioService } from './proprietario.service';
-import { CreateProprietarioDto } from './dto/create-proprietario.dto';
+import { CreateEnderecoDto, CreateProprietarioDto } from './dto/create-proprietario.dto';
 import { UpdateProprietarioDto } from './dto/update-proprietario.dto';
 import { JwtGuard } from 'src/auth/guard';
 import { GetUserId } from 'src/auth/decorator';
@@ -46,5 +46,10 @@ export class ProprietarioController {
   remove(@Param('id') id: string) {
     return this.ProprietarioService.remove(+id);
   }
-}
 
+  @UseGuards(JwtGuard)
+  @Post('endereco')
+  CreateEndereco(@GetUserId() userId: string, @Body() CreateEnderecoDto: CreateEnderecoDto) {
+    return this.ProprietarioService.createEndereco(userId, CreateEnderecoDto);
+  }
+}
