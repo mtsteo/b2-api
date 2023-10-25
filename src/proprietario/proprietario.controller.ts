@@ -10,8 +10,8 @@ export class ProprietarioController {
   constructor(private readonly ProprietarioService: ProprietarioService) {}
 
   @Post()
-  create(@Body() createPJuridicaDto: CreateProprietarioDto) {
-    return this.ProprietarioService.create(createPJuridicaDto);
+  create(@Body() createProprietarioDto: CreateProprietarioDto) {
+    return this.ProprietarioService.create(createProprietarioDto);
   }
 
   @Get()
@@ -32,14 +32,14 @@ export class ProprietarioController {
 
   @UseGuards(JwtGuard)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePJuridicaDto: UpdateProprietarioDto) {
-    return this.ProprietarioService.update(id, updatePJuridicaDto);
+  update(@Param('id') id: string, @Body() updateProprietarioDto: UpdateProprietarioDto) {
+    return this.ProprietarioService.update(id, updateProprietarioDto);
   }
 
   @UseGuards(JwtGuard)
   @Patch('colaborador/:id')
-  updateColaborador(@Param('id') id: string, @Body() updatePJuridicaDto: UpdateProprietarioDto) {
-    return this.ProprietarioService.updateColaborador(id, updatePJuridicaDto);
+  updateColaborador(@Param('id') id: string, @Body() updateProprietarioDto: UpdateProprietarioDto) {
+    return this.ProprietarioService.updateColaborador(id, updateProprietarioDto);
   }
 
   @Delete(':id')
