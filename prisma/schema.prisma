@@ -51,7 +51,6 @@ model Endereco {
   rua        String  @db.VarChar(255)
   num        String  @db.VarChar(255)
   refer      String? @db.VarChar(255)
-  enderecoId Int 
   Empresa   Empresa? @relation(fields: [empresaId], references: [id])
   empresaId String?  @db.VarChar(255)
 }
