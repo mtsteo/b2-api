@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req } from '@nestjs/common';
 import { EmpresaService } from './empresa.service';
-import { CreateEmpresaDto } from './dto/create-empresa.dto';
+import { CreateEmpresaDto, CreateEnderecoDto } from './dto/create-empresa.dto';
 import { UpdateEmpresaDto } from './dto/update-empresa.dto';
 import { JwtGuard } from 'src/auth/guard';
 import { GetUserId } from 'src/auth/decorator';
@@ -11,7 +11,7 @@ export class EmpresaController {
 
   @UseGuards(JwtGuard)
   @Post()
-  create(@GetUserId() userId : string, @Body() createEmpresaDto: CreateEmpresaDto) {
+  create(@GetUserId() userId: string, @Body() createEmpresaDto: CreateEmpresaDto) {
     return this.empresaService.create(userId, createEmpresaDto);
   }
 
@@ -33,5 +33,12 @@ export class EmpresaController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.empresaService.remove(+id);
+  }
+
+  @UseGuards(JwtGuard)
+  @Post('endereco')
+  createEndereco(@Body() CreateEnderecoDto: CreateEnderecoDto) {
+    console.log(CreateEnderecoDto)
+    return this.empresaService.createEndereco(CreateEnderecoDto);
   }
 }

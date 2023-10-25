@@ -12,3 +12,26 @@ export class CreateEmpresaDto {
     @IsNotEmpty()
     razao_social : string
 }
+
+export class CreateEnderecoDto{
+    @IsNotEmpty()
+    cep : string
+    @IsNotEmpty()
+    uf : string
+    @IsNotEmpty()
+    @IsString()
+    cidade : string
+    @IsString()
+    @IsNotEmpty()
+    bairro: string
+    @IsNotEmpty()
+    @IsString()
+    logradouro: string
+    @IsString()
+    num: string
+    @IsString()
+    refer : string
+    @IsNotEmpty()
+    @IsString()
+    empresaId : string
+}
