@@ -38,19 +38,20 @@ model EmpresaColaborador {
   colaboradorId String
   empresaId     String
   empresa       Empresa      @relation(fields: [empresaId], references: [id])
+  admin         Boolean?     @default(false)
 
   @@id([colaboradorId, empresaId])
 }
 
 model Endereco {
-  id         Int     @id @default(autoincrement())
-  cep        String  @db.VarChar(255)
-  uf         String  @db.Char(2)
-  cidade     String  @db.VarChar(255)
-  bairro     String  @db.VarChar(255)
-  rua        String  @db.VarChar(255)
-  num        String  @db.VarChar(255)
-  refer      String? @db.VarChar(255)
+  id        Int      @id @default(autoincrement())
+  cep       String   @db.VarChar(255)
+  uf        String   @db.Char(2)
+  cidade    String   @db.VarChar(255)
+  bairro    String   @db.VarChar(255)
+  rua       String   @db.VarChar(255)
+  num       String   @db.VarChar(255)
+  refer     String?  @db.VarChar(255)
   Empresa   Empresa? @relation(fields: [empresaId], references: [id])
   empresaId String?  @db.VarChar(255)
 }
