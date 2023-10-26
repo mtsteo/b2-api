@@ -29,8 +29,28 @@ export class EmpresaService {
     return 'This action adds a new empresa';
   }
 
-  findAll() {
-    return `This action returns all empresa`;
+  async findAllEmpresa(userId: string) {
+    try {
+      const dataEmpresas = await this.prisma.empresa.findMany({
+        where: {
+          proprietarioId: userId,
+        },
+      });
+
+      const colabs = await this.prisma.empresaColaborador.findMany({
+        where: {
+          colaboradorId: userId,
+        },
+        select:{
+          empresa :true
+        }
+      });
+
+      return { Empresas: dataEmpresas, colab: colabs };
+    } catch (error) {
+      return error
+    }
+    
   }
 
   findOne(id: number) {
@@ -61,9 +81,9 @@ export class EmpresaService {
           },
         },
       });
-      return "ok"
+      return 'ok';
     } catch (error) {
-      return error
+      return error;
     }
   }
 }

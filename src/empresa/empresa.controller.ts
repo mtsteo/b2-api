@@ -15,9 +15,12 @@ export class EmpresaController {
     return this.empresaService.create(userId, createEmpresaDto);
   }
 
+  
+  @UseGuards(JwtGuard)
   @Get()
-  findAll() {
-    return this.empresaService.findAll();
+  findAllEmpresas(@GetUserId() userId : string) {
+    console.log(userId)
+    return this.empresaService.findAllEmpresa(userId);
   }
 
   @Get(':id')
