@@ -63,4 +63,12 @@ model Produto {
   ncm       String   @db.VarChar(255)
   empresaId String
   empresa   Empresa? @relation(fields: [empresaId], references: [id])
+  categoriaId String
+  categoria Categoria @relation(fields: [categoriaId], references: [id])
+}
+
+model Categoria {
+  id String @id
+  desc String
+  produtos Produto[]
 }
