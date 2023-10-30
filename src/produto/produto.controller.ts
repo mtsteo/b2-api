@@ -3,6 +3,7 @@ import { ProdutoService } from './produto.service';
 import { CreateProdutoDto } from './dto/create-produto.dto';
 import { UpdateProdutoDto } from './dto/update-produto.dto';
 import { JwtGuard } from 'src/auth/guard';
+import { RoleGuard } from 'src/common/guards/role.guard';
 
 @Controller('produto')
 export class ProdutoController {
@@ -25,11 +26,13 @@ export class ProdutoController {
     return this.produtoService.findOne(+id);
   }
 
+  @UseGuards(RoleGuard, JwtGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateProdutoDto: UpdateProdutoDto) {
-    return this.produtoService.update(+id, updateProdutoDto);
+    return this.produtoService.update(id, updateProdutoDto);
   }
 
+  @UseGuards()
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.produtoService.remove(+id);

@@ -41,7 +41,6 @@ export class EmpresaController {
   @UseGuards(JwtGuard)
   @Post('endereco')
   createEndereco(@Body() CreateEnderecoDto: CreateEnderecoDto) {
-    console.log(CreateEnderecoDto)
     return this.empresaService.createEndereco(CreateEnderecoDto);
   }
 }

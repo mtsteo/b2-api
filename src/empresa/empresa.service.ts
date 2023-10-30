@@ -71,7 +71,6 @@ export class EmpresaService {
         data: {
           bairro: CreateEnderecoDto.bairro,
           cep: CreateEnderecoDto.cep,
-          cidade: CreateEnderecoDto.cidade,
           rua: CreateEnderecoDto.logradouro,
           uf: CreateEnderecoDto.uf,
           num: CreateEnderecoDto.num,
@@ -79,6 +78,11 @@ export class EmpresaService {
           Empresa: {
             connect: { id: CreateEnderecoDto.empresaId },
           },
+          cidade :{
+            create:{
+              nome : CreateEnderecoDto.cidade
+            }
+          }
         },
       });
       return 'ok';

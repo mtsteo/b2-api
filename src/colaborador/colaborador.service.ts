@@ -8,16 +8,15 @@ export class ColaboradorService {
   constructor(private prisma: PrismaService) {}
   async create(createColaboradorDto: CreateColaboradorDto) {
     try {
-     await this.prisma.empresaColaborador.create({
-        data:{
-          colaboradorId : createColaboradorDto.colaboradorId,
-          empresaId : createColaboradorDto.empresaId.toString()
-        }
-      })
-      return "Ok"
-  } catch (error) {
-      
-    }
+      await this.prisma.empresaColaborador.create({
+        data: {
+          colaboradorId: createColaboradorDto.colaboradorId,
+          empresaId: createColaboradorDto.empresaId.toString(),
+          role: createColaboradorDto.role,
+        },
+      });
+      return 'Ok';
+    } catch (error) {}
     return 'This action adds a new colaborador';
   }
 

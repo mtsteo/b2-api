@@ -8,6 +8,8 @@ export class CreateProdutoDto {
     @IsNotEmpty()
     descricao: string
     @IsString()
+    categoriaId : string
+    @IsString()
     @IsNotEmpty()
     ncm : string
     @IsNotEmpty()

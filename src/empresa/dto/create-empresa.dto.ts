@@ -4,7 +4,6 @@ export class CreateEmpresaDto {
     id: string
     @IsNotEmpty()
     @IsNotEmpty()
-    @Max(14, {message:"CNPJ deve ter no máximo 14 caracteres!"})
     cnpj : string
     @IsNotEmpty()
     @IsNotEmpty()
@@ -16,7 +15,6 @@ export class CreateEmpresaDto {
 
 export class CreateEnderecoDto{
     @IsNotEmpty()
-    @Max(8,{message: "O CEP deve ter no máximo 8 caracteres!"})
     cep : string
     @IsNotEmpty()
     uf : string

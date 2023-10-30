@@ -35,10 +35,10 @@ model Proprietario {
 
 model EmpresaColaborador {
   colaborador   Proprietario @relation(fields: [colaboradorId], references: [id])
-  colaboradorId String
+  colaboradorId String @unique
   empresaId     String
   empresa       Empresa      @relation(fields: [empresaId], references: [id])
-  admin         Boolean?     @default(false)
+  admin         Boolean
 
   @@id([colaboradorId, empresaId])
 }
@@ -75,7 +75,7 @@ model Produto {
 }
 
 model Categoria {
-  id       String    @id
+  id       String    @id @default(uuid())
   desc     String
   produtos Produto[]
 }

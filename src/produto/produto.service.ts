@@ -7,7 +7,7 @@ import { randomUUID } from 'crypto';
 @Injectable()
 export class ProdutoService {
   constructor(private prisma: PrismaService) {}
-async  create(createProdutoDto: CreateProdutoDto) {
+  async create(createProdutoDto: CreateProdutoDto) {
     try {
       await this.prisma.produto.create({
         data: {
@@ -15,14 +15,14 @@ async  create(createProdutoDto: CreateProdutoDto) {
           nome: createProdutoDto.nome,
           descricao: createProdutoDto.descricao,
           ncm: createProdutoDto.ncm,
-          empresaId : createProdutoDto.empresaId
-          
+          empresaId: createProdutoDto.empresaId.toString(),
+          categoriaId: createProdutoDto.categoriaId,
         },
       });
+      return 'Produto criado!';
     } catch (error) {
-      return error
+      return error;
     }
-    return 'This action adds the produto';
   }
 
   findAll() {
@@ -33,7 +33,21 @@ async  create(createProdutoDto: CreateProdutoDto) {
     return `This action returns a #${id} produto`;
   }
 
-  update(id: number, updateProdutoDto: UpdateProdutoDto) {
+  async update(id: string, updateProdutoDto: UpdateProdutoDto) {
+    try {
+      let data = await this.prisma.produto.update({
+        where: {
+          id: id,
+        },
+        data: {
+          ...updateProdutoDto
+        },
+      });
+
+      return data;
+    } catch (error) {
+      return error;
+    }
     return `This action updates a #${id} produto`;
   }
 
