@@ -9,7 +9,7 @@ import { RoleGuard } from 'src/common/guards/role.guard';
 export class ProdutoController {
   constructor(private readonly produtoService: ProdutoService) {}
 
-  @UseGuards(JwtGuard)
+  @UseGuards(JwtGuard, RoleGuard)
   @Post()
   create(@Body() createProdutoDto: CreateProdutoDto) {
     return this.produtoService.create(createProdutoDto);

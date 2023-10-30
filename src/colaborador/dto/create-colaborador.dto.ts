@@ -5,5 +5,5 @@ export class CreateColaboradorDto {
     colaboradorId : string 
     @IsNotEmpty()
     empresaId : String
-    role : string
+    role : boolean
 }

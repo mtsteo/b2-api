@@ -12,7 +12,7 @@ export class ColaboradorService {
         data: {
           colaboradorId: createColaboradorDto.colaboradorId,
           empresaId: createColaboradorDto.empresaId.toString(),
-          role: createColaboradorDto.role,
+          admin: createColaboradorDto.role,
         },
       });
       return 'Ok';

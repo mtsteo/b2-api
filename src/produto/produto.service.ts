@@ -7,11 +7,11 @@ import { randomUUID } from 'crypto';
 @Injectable()
 export class ProdutoService {
   constructor(private prisma: PrismaService) {}
+ 
   async create(createProdutoDto: CreateProdutoDto) {
     try {
       await this.prisma.produto.create({
         data: {
-          id: randomUUID(),
           nome: createProdutoDto.nome,
           descricao: createProdutoDto.descricao,
           ncm: createProdutoDto.ncm,
