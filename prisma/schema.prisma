@@ -47,28 +47,35 @@ model Endereco {
   id        Int      @id @default(autoincrement())
   cep       String   @db.VarChar(255)
   uf        String   @db.Char(2)
-  cidade    String   @db.VarChar(255)
   bairro    String   @db.VarChar(255)
   rua       String   @db.VarChar(255)
   num       String   @db.VarChar(255)
   refer     String?  @db.VarChar(255)
   Empresa   Empresa? @relation(fields: [empresaId], references: [id])
   empresaId String?  @db.VarChar(255)
+  cidadeId  String
+  cidade    Cidade   @relation(fields: [cidadeId], references: [id])
+}
+
+model Cidade {
+  id       String     @id @default(uuid())
+  nome     String
+  endereco Endereco[]
 }
 
 model Produto {
-  id        String   @id @db.VarChar(255)
-  nome      String   @db.VarChar(255)
-  descricao String   @db.Text
-  ncm       String   @db.VarChar(255)
-  empresaId String
-  empresa   Empresa? @relation(fields: [empresaId], references: [id])
+  id          String    @id @db.VarChar(255)
+  nome        String    @db.VarChar(255)
+  descricao   String    @db.Text
+  ncm         String    @db.VarChar(255)
+  empresaId   String
+  empresa     Empresa?  @relation(fields: [empresaId], references: [id])
   categoriaId String
-  categoria Categoria @relation(fields: [categoriaId], references: [id])
+  categoria   Categoria @relation(fields: [categoriaId], references: [id])
 }
 
 model Categoria {
-  id String @id
-  desc String
+  id       String    @id
+  desc     String
   produtos Produto[]
 }
