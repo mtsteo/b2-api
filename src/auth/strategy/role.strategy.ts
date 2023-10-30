@@ -27,8 +27,8 @@ export class RoleStrategy extends PassportStrategy(Strategy, 'role') {
     });
 
     if (!colabRole.admin) {
-      return null;
+      return false;
     }
-    return colabRole;
+    return true;
   }
 }

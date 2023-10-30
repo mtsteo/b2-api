@@ -10,16 +10,25 @@ export class EmpresaService {
   constructor(private prisma: PrismaService) {}
 
   async create(userId: string, createEmpresaDto: CreateEmpresaDto) {
+    let randomId = randomUUID();
     try {
       await this.prisma.empresa.create({
         data: {
-          id: randomUUID(),
+          id: randomId,
           cnpj: createEmpresaDto.cnpj,
           razao_social: createEmpresaDto.razao_social,
           nome_fantasia: createEmpresaDto.nome_fantasia,
           proprietarioId: userId,
+          colaboradores: {
+            create: {
+              admin: true,
+              colaboradorId: userId,
+            },
+          },
         },
       });
+
+      return 'Sua empresa foi cadastrada!';
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
         if (error.code === 'P2002')
@@ -41,16 +50,15 @@ export class EmpresaService {
         where: {
           colaboradorId: userId,
         },
-        select:{
-          empresa :true
-        }
+        select: {
+          empresa: true,
+        },
       });
 
       return { Empresas: dataEmpresas, colab: colabs };
     } catch (error) {
-      return error
+      return error;
     }
-    
   }
 
   findOne(id: number) {
@@ -78,11 +86,11 @@ export class EmpresaService {
           Empresa: {
             connect: { id: CreateEnderecoDto.empresaId },
           },
-          cidade :{
-            create:{
-              nome : CreateEnderecoDto.cidade
-            }
-          }
+          cidade: {
+            create: {
+              nome: CreateEnderecoDto.cidade,
+            },
+          },
         },
       });
       return 'ok';

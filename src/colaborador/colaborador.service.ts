@@ -12,12 +12,13 @@ export class ColaboradorService {
         data: {
           colaboradorId: createColaboradorDto.colaboradorId,
           empresaId: createColaboradorDto.empresaId.toString(),
-          admin: createColaboradorDto.role,
+          admin: createColaboradorDto.admin,
         },
       });
       return 'Ok';
-    } catch (error) {}
-    return 'This action adds a new colaborador';
+    } catch (error) {
+      return error
+    }
   }
 
   findAll() {

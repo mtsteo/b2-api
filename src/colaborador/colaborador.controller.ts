@@ -12,7 +12,6 @@ export class ColaboradorController {
   @UseGuards(JwtGuard)
   @Post()
   create(@Body() createColaboradorDto: CreateColaboradorDto) {
-    console.log(createColaboradorDto)
     return this.colaboradorService.create(createColaboradorDto);
   }
 
