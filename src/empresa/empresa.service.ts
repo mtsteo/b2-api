@@ -80,7 +80,6 @@ export class EmpresaService {
           bairro: CreateEnderecoDto.bairro,
           cep: CreateEnderecoDto.cep,
           rua: CreateEnderecoDto.logradouro,
-          uf: CreateEnderecoDto.uf,
           num: CreateEnderecoDto.num,
           refer: CreateEnderecoDto.refer,
           Empresa: {
@@ -89,11 +88,15 @@ export class EmpresaService {
           cidade: {
             create: {
               nome: CreateEnderecoDto.cidade,
+              estado:{
+                create:{
+                  estado_nome : CreateEnderecoDto.estado
+                }
+              }
             },
           },
         },
       });
-      return 'ok';
     } catch (error) {
       return error;
     }

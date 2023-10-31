@@ -17,7 +17,7 @@ export class CreateEnderecoDto{
     @IsNotEmpty()
     cep : string
     @IsNotEmpty()
-    uf : string
+    estado : string
     @IsNotEmpty()
     @IsString()
     cidade : string
