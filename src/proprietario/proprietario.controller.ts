@@ -42,10 +42,6 @@ export class ProprietarioController {
     return this.ProprietarioService.updateColaborador(id, updateProprietarioDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.ProprietarioService.remove(+id);
-  }
 
   @UseGuards(JwtGuard)
   @Post('endereco')

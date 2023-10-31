@@ -54,8 +54,8 @@ export class EmpresaService {
           empresa: true,
         },
       });
-
       return { Empresas: dataEmpresas, colab: colabs };
+      
     } catch (error) {
       return error;
     }

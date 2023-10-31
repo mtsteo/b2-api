@@ -92,10 +92,6 @@ export class ProprietarioService {
     } catch (error) {}
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} pJuridica`;
-  }
-
   createEndereco(userId: string, CreateEnderecoDto: CreateEnderecoDto) {
     try {
     } catch (error) {}
