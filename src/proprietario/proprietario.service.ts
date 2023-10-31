@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateEnderecoDto, CreateProprietarioDto } from './dto/create-proprietario.dto';
 import { UpdateProprietarioDto } from './dto/update-proprietario.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -23,7 +23,6 @@ export class ProprietarioService {
           sobrenome: createProprietarioDto.sobrenome,
         },
       });
-      return 'User created';
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
         if (error.code === 'P2002')
@@ -50,7 +49,7 @@ export class ProprietarioService {
       delete userData.senha;
       return userData;
     }
-    throw new ForbiddenException({ error: 'usuário não entrado!' });
+    throw new NotFoundException({ error: 'usuário não encontrado!' });
   }
   async findOne(id: string) {
     const userData = await this.prisma.proprietario.findFirst({
@@ -65,7 +64,7 @@ export class ProprietarioService {
       delete userData.senha;
       return userData;
     }
-    throw new ForbiddenException({ error: 'usuário não entrado!' });
+    throw new NotFoundException({ error: 'usuário não entrado!' });
   }
 
   async update(id: string, updatePJuridicaDto: UpdateProprietarioDto) {
@@ -99,7 +98,6 @@ export class ProprietarioService {
 
   createEndereco(userId: string, CreateEnderecoDto: CreateEnderecoDto) {
     try {
-
     } catch (error) {}
   }
 }
