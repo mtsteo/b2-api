@@ -90,11 +90,11 @@ model Categoria {
 }
 
 model Sub_1 {
-  id         String      @id @default(uuid())
-  nome_sub1  String
-  sub_2_Id   String?
-  sub_2      Sub_2?      @relation(fields: [sub_2_Id], references: [id])
-  categorias Categoria[]
+  id            String      @id @default(uuid())
+  nome_sub1     String
+  sub_2_Id      String?
+  subCategoria2 Sub_2?      @relation(fields: [sub_2_Id], references: [id])
+  categorias    Categoria[]
 }
 
 model Sub_2 {

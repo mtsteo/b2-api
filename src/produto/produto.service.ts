@@ -2,12 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { CreateProdutoDto } from './dto/create-produto.dto';
 import { UpdateProdutoDto } from './dto/update-produto.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { randomUUID } from 'crypto';
 
 @Injectable()
 export class ProdutoService {
   constructor(private prisma: PrismaService) {}
- 
+
   async create(createProdutoDto: CreateProdutoDto) {
     try {
       await this.prisma.produto.create({
@@ -15,8 +14,22 @@ export class ProdutoService {
           nome: createProdutoDto.nome,
           descricao: createProdutoDto.descricao,
           ncm: createProdutoDto.ncm,
-          empresaId: createProdutoDto.empresaId.toString(),
-          categoriaId: createProdutoDto.categoriaId,
+          empresa: {
+            connect: {
+              id: createProdutoDto.empresaId,
+            },
+          },
+          categoria: {
+            connect: {
+              id: createProdutoDto.categoriaId,
+              subCategoria1: {
+                id: createProdutoDto.subCateg_1_Id,
+                subCategoria2: {
+                  id: createProdutoDto.subCateg_2_Id,
+                },
+              },
+            },
+          },
         },
       });
       return 'Produto criado!';
@@ -40,7 +53,7 @@ export class ProdutoService {
           id: id,
         },
         data: {
-          ...updateProdutoDto
+          ...updateProdutoDto,
         },
       });
 

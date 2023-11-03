@@ -10,6 +10,10 @@ export class CreateProdutoDto {
     @IsString()
     categoriaId : string
     @IsString()
+    subCateg_1_Id : string
+    @IsString()
+    subCateg_2_Id : string
+    @IsString()
     @IsNotEmpty()
     ncm : string
     @IsNotEmpty()
