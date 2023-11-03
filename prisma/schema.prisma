@@ -61,36 +61,44 @@ model Cidade {
   nome     String
   endereco Endereco[]
   estadoId String
-  estado Estado @relation(fields: [estadoId], references: [id])
+  estado   Estado     @relation(fields: [estadoId], references: [id])
 }
 
 model Estado {
-  id          String @id @default(uuid())
+  id          String   @id @default(uuid())
   estado_nome String
-  cidades Cidade[]
+  cidades     Cidade[]
 }
 
 model Produto {
-  id        String   @id @default(uuid()) @db.VarChar(255)
-  nome      String   @db.VarChar(255)
-  descricao String   @db.Text
-  ncm       String   @db.VarChar(255)
-  empresaId String
-  empresa   Empresa? @relation(fields: [empresaId], references: [id])
-  grupoId   String
-  grupo     Grupo    @relation(fields: [grupoId], references: [id])
+  id          String     @id @default(uuid()) @db.VarChar(255)
+  nome        String     @db.VarChar(255)
+  descricao   String     @db.Text
+  ncm         String     @db.VarChar(255)
+  empresaId   String?
+  empresa     Empresa?   @relation(fields: [empresaId], references: [id])
+  categoriaId String?
+  categoria   Categoria? @relation(fields: [categoriaId], references: [id])
 }
 
-model Grupo {
+model Categoria {
   id             String    @id @default(uuid())
   categoria_nome String
   produtos       Produto[]
-  familiaId      String
-  familia        Familia   @relation(fields: [familiaId], references: [id])
+  sub_1_Id       String?
+  subCategoria1  Sub_1?    @relation(fields: [sub_1_Id], references: [id])
 }
 
-model Familia {
-  id           String  @id @default(uuid())
-  familia_nome String
-  grupos       Grupo[]
+model Sub_1 {
+  id         String      @id @default(uuid())
+  nome_sub1  String
+  sub_2_Id   String?
+  sub_2      Sub_2?      @relation(fields: [sub_2_Id], references: [id])
+  categorias Categoria[]
+}
+
+model Sub_2 {
+  id        String  @id @default(uuid())
+  nome_sub2 String
+  sub_1     Sub_1[]
 }
