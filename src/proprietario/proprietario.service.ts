@@ -21,6 +21,7 @@ export class ProprietarioService {
           cpf: createProprietarioDto.cpf,
           nome: createProprietarioDto.nome,
           sobrenome: createProprietarioDto.sobrenome,
+          // data_nascimento : createProprietarioDto.data_nascimento
         },
       });
     } catch (error) {

@@ -22,15 +22,16 @@ model Empresa {
 }
 
 model Proprietario {
-  id            String               @id @db.VarChar(255)
-  nome          String               @db.VarChar(255)
-  sobrenome     String               @db.VarChar(255)
-  email         String               @unique @db.VarChar(255)
-  senha         String               @db.VarChar(255)
-  data_cadastro DateTime             @default(now()) @db.Timestamp(0)
-  cpf           String               @unique @db.VarChar(255)
-  empresa       Empresa[]
-  colaboradres  EmpresaColaborador[]
+  id              String               @id @db.VarChar(255)
+  nome            String               @db.VarChar(255)
+  sobrenome       String               @db.VarChar(255)
+  email           String               @unique @db.VarChar(255)
+  senha           String               @db.VarChar(255)
+  // data_nascimento DateTime?            @db.Date()
+  data_cadastro   DateTime             @default(now()) @db.Timestamp(0)
+  cpf             String               @unique @db.VarChar(255)
+  empresa         Empresa[]
+  colaboradres    EmpresaColaborador[]
 }
 
 model EmpresaColaborador {

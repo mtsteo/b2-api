@@ -17,8 +17,8 @@ export class CreateProprietarioDto {
     @IsString()
     @IsNotEmpty()
     sobrenome: string
-   
-    
+    // @IsString()
+    // data_nascimento : string
 }
 
 export class CreateEnderecoDto{
