@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, Max } from "class-validator"
+import { IsEnum, IsNotEmpty, IsString, Max } from "class-validator"
 
 export class CreateEmpresaDto {
     id: string
@@ -11,6 +11,11 @@ export class CreateEmpresaDto {
     @IsNotEmpty()
     @IsNotEmpty()
     razao_social : string
+}
+
+enum TipoEndereco {
+   ENTREGA ="ENTREGA",
+   COBRANCA= "COBRANÇA"
 }
 
 export class CreateEnderecoDto{
@@ -34,4 +39,7 @@ export class CreateEnderecoDto{
     @IsNotEmpty()
     @IsString()
     empresaId : string
+    @IsEnum(TipoEndereco)
+    tipo : TipoEndereco
 }
+

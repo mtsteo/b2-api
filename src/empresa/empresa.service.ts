@@ -55,7 +55,6 @@ export class EmpresaService {
         },
       });
       return { Empresas: dataEmpresas, colab: colabs };
-      
     } catch (error) {
       return error;
     }
@@ -82,17 +81,18 @@ export class EmpresaService {
           rua: CreateEnderecoDto.logradouro,
           num: CreateEnderecoDto.num,
           refer: CreateEnderecoDto.refer,
+          tipo : CreateEnderecoDto.tipo,
           Empresa: {
             connect: { id: CreateEnderecoDto.empresaId },
           },
           cidade: {
             create: {
               nome: CreateEnderecoDto.cidade,
-              estado:{
-                create:{
-                  estado_nome : CreateEnderecoDto.estado
-                }
-              }
+              estado: {
+                create: {
+                  estado_nome: CreateEnderecoDto.estado,
+                },
+              },
             },
           },
         },
