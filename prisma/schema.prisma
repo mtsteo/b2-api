@@ -36,7 +36,7 @@ model Proprietario {
 
 model EmpresaColaborador {
   colaborador   Proprietario @relation(fields: [colaboradorId], references: [id])
-  colaboradorId String       @unique
+  colaboradorId String       
   empresaId     String
   empresa       Empresa      @relation(fields: [empresaId], references: [id])
   admin         Boolean
