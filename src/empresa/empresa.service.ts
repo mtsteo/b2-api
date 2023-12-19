@@ -19,12 +19,12 @@ export class EmpresaService {
           razao_social: createEmpresaDto.razao_social,
           nome_fantasia: createEmpresaDto.nome_fantasia,
           proprietarioId: userId,
-          colaboradores: {
-            create: {
-              admin: true,
-              colaboradorId: userId,
-            },
-          },
+          // colaboradores: {
+          //   create: {
+          //     admin: true,
+          //     colaboradorId: userId,
+          //   },
+          // },
         },
       });
 
